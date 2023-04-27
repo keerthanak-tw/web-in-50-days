@@ -44,10 +44,10 @@ const generatePassword = (lower, upper, number, symbol, length) => {
   }
 
   for (let i = 0; i < length; i += typesCount) {
-    typesArr.forEach(type => {
-        const funcName = Object.keys(type)[0];
-        generatedPassword += randomFunctionMap[funcName]();
-    })
+    typesArr.forEach((type) => {
+      const funcName = Object.keys(type)[0];
+      generatedPassword += randomFunctionMap[funcName]();
+    });
   }
   return generatedPassword.slice(0, length);
 };
@@ -66,4 +66,21 @@ generateEl.addEventListener("click", () => {
     hasSymbol,
     length
   );
+});
+
+clipboardEl.addEventListener("click", () => {
+  const textarea = document.createElement("textarea");
+
+  const password = resultEl.innerText;
+
+  if (!password) {
+    return;
+  }
+
+  textarea.value = password;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
+  alert("Password copied to clipboard!");
 });
